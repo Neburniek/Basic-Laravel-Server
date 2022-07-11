@@ -1,0 +1,26 @@
+-	Iniciate project: command line composer create-project --prefer-dist laravel/Laravel
+-	initiate project : php artisan serve
+-	modify .env to connect database
+-	go to app -providers – AppServiceProviders.php and add on top use Illuminate\Support\facades\Schema;
+-	on the same file, add inside boot function   Schema::defaultStringLength(191);
+-	Create a model set on console: php artisan make:model Employee -m
+-	On Databases – migrations  we look for the employee table migration and we add on the schema de data that we want to have on Employee, in this case we add           $table->string('name');
+        $table->string('email');
+        $table->integer('salary');
+-	Then we do php artisan migrate on the console. 
+-	Now we create a controller, so we do on console php artisan make:controller EmployeeController
+-	We go to routes and then we go to API in order to generate the API route. There you need to make the route get and connect it with the controller, we connect setting the following:
+On top we connect the controller like this:
+ use App\Http\Controllers\EmployeeController;
+and on botton we make the response for get like this:
+Route::get('/employees', [EmployeeController::class, 'getEmployee']);
+-	Now on the controller we create the function getEmployee inside the controller and return all employees, like this:    
+ public function getEmployee()
+    {
+        return response()->json(Employee::all(), 200);
+    }
+-	On the file there are examples about how to create a route to show 1 employee or to create employee.
+-	To create employee, in addition you need to edit the model and add the fillable. Fillable are what they are allow to fill via request. We add this line on  class employee:
+public $timestamps = false;
+    protected $fillable = ['name', 'email', 'salary'];
+-	
